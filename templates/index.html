@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis Platform</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --text-color: hsl(210, 20%, 85%);
+            --bg-color: hsl(220, 20%, 15%);
+            --card-bg: hsl(220, 20%, 25%);
+            --border-color: hsl(220, 10%, 35%);
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --primary-color: hsl(45, 100%, 70%); /* Gold color */
+            --primary-dark: hsl(45, 100%, 60%); /* Darker Gold */
+            --success-color: hsl(120, 60%, 55%);
+            --error-color: hsl(0, 70%, 65%);
+            --current-dynamic-color: var(--primary-color);
+            --current-dynamic-dark: var(--primary-dark);
+            --light-text: #999;
+            --font-family-primary: 'Inter', sans-serif;
+            --font-family-secondary: 'Roboto', sans-serif;
+            --header-height: 60px;
+            --border-radius: 8px;
+            --current-dynamic-color-h: 45;
+            --current-dynamic-color-s: 100;
+            --current-dynamic-color-l: 70;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top left, hsl(220, 25%, 10%) 0%, hsl(220, 20%, 15%) 40%, hsl(220, 15%, 12%) 100%);
+            color: white; /* All text white */
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--header-height);
+        }
+
+        .logo {
+            font-family: var(--font-family-secondary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: white; /* All text white */
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Roboto', sans-serif;
+            color: var(--primary-color); /* Gold for all headings */
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            margin-left: 20px;
+            margin-right: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .card:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section {
+            text-align: center;
+            padding: 3rem;
+            border: 1px dashed var(--border-color);
+            border-radius: var(--border-radius);
+            background: linear-gradient(145deg, var(--card-bg), var(--bg-color));
+        }
+
+        .upload-section h2 {
+            font-size: 2rem;
+        }
+
+        .file-input-container {
+            margin: 1.5rem 0;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--current-dynamic-color);
+            color: black;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-input-label:hover {
+            background-color: var(--current-dynamic-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .file-input-label:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        #results .report-container {
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .analysis-section {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-selection {
+            margin: 2rem 0;
+        }
+
+        .feature-selection h3 {
+            font-size: 1.5rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--card-bg);
+            color: white; /* All text white */
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        select:focus {
+            border-color: var(--current-dynamic-color);
+            outline: none;
+            box-shadow: 0 0 0 2px hsla(var(--current-dynamic-color-h), var(--current-dynamic-color-s), var(--current-dynamic-color-l), 0.3);
+        }
+
+        select[multiple] {
+            height: 200px;
+        }
+
+        button {
+            background-color: var(--current-dynamic-color);
+            color: black;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: var(--current-dynamic-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--current-dynamic-color);
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--current-dynamic-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .progress-container {
+            margin-top: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--current-dynamic-color), var(--success-color));
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: white; /* All text white */
+            display: none;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            background-color: hsla(0, 70%, 65%, 0.1);
+            border: 1px solid var(--error-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .results-section {
+            margin-top: 2rem;
+        }
+
+        .results-section h2 {
+            font-size: 2rem;
+        }
+
+        #results {
+            background-color: hsl(240, 15%, 25%);
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            color: white; /* All text white */
+        }
+
+        #results pre {
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: white; /* All text white */
+        }
+
+        .toggle-button {
+            background-color: var(--current-dynamic-color);
+            color: black;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background-color: var(--current-dynamic-dark);
+        }
+
+        .toggle-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .feature-select-button {
+            padding: 5px 10px;
+            font-size: 12px;
+            margin-bottom: 5px;
+            width: fit-content;
+            display: block;
+            border-radius: 5px;
+            text-align: left;
+            background-color: var(--card-bg);
+            color: white; /* All text white */
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-select-button.selected {
+            background-color: var(--current-dynamic-color);
+            color: black;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #featureButtonsContainer {
+            display: block;
+            margin-top: 10px;
+        }
+
+        #analysisProgressBarContainer {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        #analysisProgressBar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #analysisProgress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--current-dynamic-color), var(--success-color));
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        #analysisProgressText {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: white; /* All text white */
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white; /* All text white */
+        }
+
+        .results-table th:last-child,
+        .results-table td:last-child {
+            border-right: none;
+        }
+
+        .results-table th {
+            font-weight: 600;
+            color: var(--primary-color); /* Gold for table headers */
+            padding-bottom: 12px;
+        }
+
+        .results-table td {
+            color: white; /* All text white */
+        }
+
+        .btn-success {
+            background-color: var(--success-color) !important;
+            color: #222 !important;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #4caf50 !important;
+            color: #fff !important;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* New styles for report buttons and display */
+        .report-buttons-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            margin-bottom: 1rem;
+        }
+
+        .report-buttons-container button {
+            flex: 1; /* Make buttons take equal width */
+            margin-top: 0; /* Override default button margin-top */
+        }
+
+        .report-display-area {
+            background-color: #1a202c; /* Dark background for report content */
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto; /* Allow horizontal scrolling for wide tables */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            min-height: 200px; /* Ensure some height even if empty */
+            color: white; /* All text white */
+        }
+
+        /* Styles for tables within the report-display-area (from app.py report CSS) */
+        .report-display-area table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .report-display-area th, .report-display-area td {
+            border: 1px solid #4a5568; /* Use a slightly lighter border for content */
+            padding: 0.75rem;
+            text-align: left;
+            color: white; /* All text white */
+        }
+        .report-display-area th {
+            background-color: #2d3748;
+            font-weight: 600;
+            color: var(--primary-color); /* Gold for table headers */
+        }
+        .report-display-area tr:nth-child(even) {
+            background-color: #2d3748;
+        }
+        .report-display-area tr:nth-child(odd) {
+            background-color: #1a202c;
+        }
+        .report-display-area h1, .report-display-area h2, .report-display-area h3, .report-display-area h4 {
+            color: var(--primary-color); /* Gold for headings */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .report-display-area ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            padding-left: 0;
+            color: white; /* All text white */
+        }
+        .report-display-area li {
+            margin-bottom: 0.5rem;
+            color: white; /* All text white */
+        }
+
+        /* Matrix Mode Styles */
+        .matrix-mode {
+            background-color: black !important;
+            color: #00ff00 !important; /* Green text */
+            font-family: 'monospace' !important;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+        }
+        .matrix-mode pre {
+            color: #00ff00 !important;
+        }
+
+        /* New styles for inline terminal logs */
+        #inlineTerminalLogsContainer {
+            display: none; /* Hidden by default */
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            color: white; /* All text white by default */
+        }
+
+        #inlineTerminalLogsContainer h2,
+        #inlineTerminalLogsContainer h3,
+        #inlineTerminalLogsContainer h4 {
+            color: var(--primary-color); /* Gold for headings */
+        }
+
+        #inlineTerminalLogsContainer .log-content-wrapper {
+            height: auto; /* Will be set dynamically by JS */
+            max-height: 200px; /* Max height for the log box */
+            overflow-y: auto;
+            background-color: #1e1e1e; /* Dark background for the log text area */
+            color: white; /* Log text itself should be white */
+            padding: 10px;
+            font-family: monospace;
+            border-radius: 4px;
+            margin-top: 1rem;
+            user-select: text; /* Allow text selection for copying */
+        }
+
+        #inlineTerminalLogsContainer .log-controls button {
+            margin-top: 0.5rem;
+            margin-right: 10px;
+        }
+
+        /* Style for the new log toggle button container */
+        #logToggleButtonContainer {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        #logToggleButtonContainer button {
+            margin: 0; /* Remove default button margin-top */
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: var(--current-dynamic-color);
+            color: black;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #logToggleButtonContainer button:hover {
+            background-color: var(--current-dynamic-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0;
+            }
+
+            .card {
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .upload-section {
+                padding: 2rem;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .report-buttons-container {
+                flex-direction: column; /* Stack buttons vertically on small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Data Analysis Platform</h1>
+        <div class="card upload-section">
+            <h2>Upload Your Data</h2>
+            <div class="file-input-container">
+                <label for="fileInput" class="file-input-label">Choose File</label>
+                <input type="file" id="fileInput" accept=".csv,.json,.xlsx">
+            </div>
+            <p>Supported formats: CSV, JSON, Excel</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+        <div class="loading" id="loadingIndicator">
+            <p>Processing your data...</p>
+        </div>
+        <div class="card analysis-section" id="analysisSection">
+            <h2>Data Analysis</h2>
+            <div class="feature-selection">
+                <h3>Select Analysis Type</h3>
+                <select id="analysisType">
+                    <option value="exploratory">Exploratory Analysis</option>
+                    <option value="regression">Regression</option>
+                    <option value="classification">Classification</option>
+                    <option value="clustering">Clustering</option>
+                    <option value="visualization">Visualization</option>
+                    <option value="report">Report</option>
+                </select>
+                <div id="featureSelectionContainer">
+                    <h3>
+                        Select Features
+                        <button id="toggleMultiSelectBtn" class="toggle-button">Toggle Multi-Select</button>
+                    </h3>
+                    <select id="features"></select>
+                    <div id="featureButtonsContainer"></div>
+                    <div id="targetFeatureContainer" style="display: none;">
+                        <h3>Select Target Feature</h3>
+                        <select id="targetFeature"></select>
+                    </div>
+                </div>
+                <div id="graphSelectionContainer" style="display: none;">
+                    <h3>Select Graph Type</h3>
+                    <select id="graphType">
+                        <option value="histogram">Histogram</option>
+                        <option value="boxplot">Box Plot</option>
+                        <option value="scatterplot">Scatter Plot</option>
+                        <option value="pairplot">Pair Plot</option>
+                        <option value="heatmap">Heatmap</option>
+                    </select>
+                </div>
+                <button onclick="performAnalysis()" id="analyzeBtn">Analyze Data</button>
+                <div id="analysisProgressBarContainer">
+                    <div id="analysisProgressBar">
+                        <div id="analysisProgress"></div>
+                    </div>
+                    <div id="analysisProgressText">0% Analyzing...</div>
+                </div>
+            </div>
+            <div class="results-section" id="resultsSection">
+                <h2>Results</h2>
+                <div id="reportControls" class="report-buttons-container hidden">
+                    <button id="toggleReportDisplayBtn">Show TXT Report</button>
+                    <button id="downloadTxtReportBtn">Download TXT Report</button>
+                </div>
+                <div id="reportDisplayArea" class="report-display-area hidden">
+                    <p>Report will appear here.</p>
+                </div>
+                <div id="results"></div>
+            </div>
+        </div>
+
+        <div id="logToggleButtonContainer">
+            <button id="logToggleButton" class="btn">Show Logs</button>
+        </div>
+
+        <div class="card" id="inlineTerminalLogsContainer">
+            <h2>Terminal Logs</h2>
+            <div class="log-content-wrapper"> <pre id="logsText"></pre>
+            </div>
+            <div class="log-controls">
+                <button type="button" class="btn" id="clearLogsBtn">Clear</button>
+                <button type="button" class="btn" id="refreshLogsBtn">Refresh Logs</button>
+                <button type="button" class="btn" id="toggleMatrixModeBtn">Matrix Mode</button>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        let currentFileId = null;
+        let currentColumns = [];
+        let currentAnalysisResults = {};
+        let processingInterval = null;
+        let analysisProcessingInterval = null;
+        let uploadProcessingMessageShown = false;
+        let reportGenerated = false;
+        let lastHtmlReportContent = ''; // Store HTML report content
+        let lastTxtReportContent = ''; // Store TXT report content
+        let lastTxtReportDownloadUrl = ''; // Store TXT report download URL
+        let isHtmlReportCurrentlyDisplayed = true; // Tracks what's currently in reportDisplayArea
+        let logRefreshIntervalId = null; // To store the interval ID for log refreshing
+        let lastLogContent = ''; // To store the last fetched log content for comparison
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('analysisType').dispatchEvent(new Event('change'));
+            // Ensure report controls are hidden on initial load
+            document.getElementById('reportControls').classList.add('hidden');
+            document.getElementById('reportDisplayArea').classList.add('hidden');
+            
+            // Ensure inline log container is hidden on initial load
+            document.getElementById('inlineTerminalLogsContainer').style.display = 'none';
+            document.getElementById('logToggleButton').textContent = 'Show Logs'; // Set initial button text
+        });
+
+        function updateThemeForAnalysisType(analysisType) {
+            document.documentElement.style.setProperty('--current-dynamic-color', 'var(--primary-color)');
+            document.documentElement.style.setProperty('--current-dynamic-dark', 'var(--primary-dark)');
+        }
+
+        function createDynamicTable(headers, dataRows) {
+            const table = document.createElement('table');
+            table.className = 'results-table';
+            const thead = table.createTHead();
+            const headerRow = thead.insertRow();
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            const tbody = table.createTBody();
+            dataRows.forEach(rowData => {
+                const row = tbody.insertRow(); // Corrected: insertRow() on tbody
+                headers.forEach(header => {
+                    const cell = row.insertCell(); // insertCell() on the row
+                    let value = rowData[header];
+                    // Handle Spark schema output for struct types (like _id: struct)
+                    if (typeof value === 'object' && value !== null && value.oid) {
+                        value = `ObjectId(${value.oid})`;
+                    } else if (Array.isArray(value)) {
+                        // Handle array values, stringify objects within arrays
+                        value = value.map(v => (typeof v === 'object' && v !== null ? JSON.stringify(v) : v)).join(', ');
+                        if (value.length > 50) value = value.substring(0, 50) + '...';
+                    } else if (typeof value === 'object' && value !== null) {
+                        // Handle generic object values, stringify for display
+                        value = JSON.stringify(value);
+                        if (value.length > 50) value = value.substring(0, 50) + '...';
+                    }
+                    cell.textContent = value !== null && value !== undefined ? value : 'N/A';
+                });
+            });
+            return table;
+        }
+
+        function displayInitialDataSummary() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            if (!currentAnalysisResults || !currentAnalysisResults.columns) {
+                resultsDiv.innerHTML = '<p>No data summary available.</p>';
+                return;
+            }
+            const overviewTitle = document.createElement('h4');
+            overviewTitle.textContent = 'Data Overview:';
+            resultsDiv.appendChild(overviewTitle);
+            const overviewList = document.createElement('ul');
+            const totalRows = currentAnalysisResults.total_rows !== undefined ? currentAnalysisResults.total_rows : 'N/A';
+            const totalColumns = currentAnalysisResults.columns.length;
+            overviewList.innerHTML = `
+                <li><strong>Total Rows:</strong> ${totalRows}</li>
+                <li><strong>Total Columns:</strong> ${totalColumns}</li>
+            `;
+            resultsDiv.appendChild(overviewList);
+            const columnDetailsTitle = document.createElement('h4');
+            columnDetailsTitle.textContent = 'Column Details (Numeric & Boolean):';
+            resultsDiv.appendChild(columnDetailsTitle);
+            const filteredColumns = currentAnalysisResults.columns.filter(col => {
+                const type = col.type.toLowerCase();
+                return type.includes('int') || type.includes('float') || type.includes('double') || type.includes('boolean');
+            });
+            const columnData = filteredColumns.map(col => ({
+                'Column Name': col.name,
+                'Type': col.type,
+                'Min': col.min !== undefined ? col.min : 'N/A',
+                'Max': col.max !== undefined ? col.max : 'N/A',
+                'Mean': col.mean !== undefined ? col.mean : 'N/A'
+            }));
+            const columnHeaders = ['Column Name', 'Type', 'Min', 'Max', 'Mean'];
+            resultsDiv.appendChild(createDynamicTable(columnHeaders, columnData));
+        }
+
+        document.getElementById('fileInput').addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            const formData = new FormData();
+            if (!file) {
+                if (processingInterval) clearInterval(processingInterval);
+                document.getElementById('progressBar').style.display = 'none';
+                document.getElementById('progressText').style.display = 'none';
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('analysisSection').style.display = 'none';
+                return;
+            }
+            formData.append('file', file);
+            const progressBar = document.getElementById('progressBar');
+            const progress = document.getElementById('progress');
+            const progressText = document.getElementById('progressText');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorMessage = document.getElementById('errorMessage');
+            const analysisSection = document.getElementById('analysisSection');
+            errorMessage.style.display = 'none';
+            progressBar.style.display = 'block';
+            progressText.style.display = 'block';
+            loadingIndicator.style.display = 'block';
+            analysisSection.style.display = 'none';
+            progress.style.width = '0%';
+            progressText.textContent = '0% Uploading...';
+            uploadProcessingMessageShown = false;
+            if (processingInterval) {
+                clearInterval(processingInterval);
+                processingInterval = null;
+            }
+            let uploadSimulatedProgress = 0;
+            processingInterval = setInterval(() => {
+                if (uploadSimulatedProgress < 50) {
+                    uploadSimulatedProgress = Math.min(50, uploadSimulatedProgress + 5);
+                    progress.style.width = `${uploadSimulatedProgress}%`;
+                    progressText.textContent = `${uploadSimulatedProgress}% Uploading...`;
+                    if (uploadSimulatedProgress === 50) {
+                        progressText.textContent = '50% Upload complete, starting data processing...';
+                        uploadProcessingMessageShown = true;
+                    }
+                } else {
+                    clearInterval(processingInterval);
+                    processingInterval = null;
+                }
+            }, 500);
+            try {
+                const xhr = new XMLHttpRequest();
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        const data = JSON.parse(xhr.responseText);
+                        currentFileId = data.file_id;
+                        if (data.analysis && data.analysis.columns) {
+                            currentColumns = data.analysis.columns.map(col => col.name);
+                            currentAnalysisResults = data.analysis;
+                        } else {
+                            throw new Error('No column information in response');
+                        }
+                        let processingProgress = 50;
+                        if (processingInterval) clearInterval(processingInterval);
+                        processingInterval = setInterval(() => {
+                            if (processingProgress < 100) {
+                                processingProgress = Math.min(100, processingProgress + 5);
+                                progress.style.width = `${processingProgress}%`;
+                                progressText.textContent = `${processingProgress}% Processing data...`;
+                            } else {
+                                clearInterval(processingInterval);
+                                processingInterval = null;
+                                progressText.textContent = 'Processing Complete!';
+                                setTimeout(() => {
+                                    progressBar.style.display = 'none';
+                                    progressText.style.display = 'none';
+                                    loadingIndicator.style.display = 'none';
+                                    analysisSection.style.display = 'block';
+                                    displayInitialDataSummary();
+                                    document.getElementById('analysisType').dispatchEvent(new Event('change'));
+                                }, 500);
+                            }
+                        }, 200);
+                    } else {
+                        if (processingInterval) clearInterval(processingInterval);
+                        errorMessage.textContent = 'Error: ' + (JSON.parse(xhr.responseText).error || 'Upload failed');
+                        errorMessage.style.display = 'block';
+                        progressBar.style.display = 'none';
+                        progressText.style.display = 'none';
+                        loadingIndicator.style.display = 'none';
+                    }
+                };
+                xhr.onerror = () => {
+                    if (processingInterval) clearInterval(processingInterval);
+                    errorMessage.textContent = 'Error: Network error during upload.';
+                    errorMessage.style.display = 'block';
+                    progressBar.style.display = 'none';
+                    progressText.style.display = 'none';
+                    loadingIndicator.style.display = 'none';
+                };
+                xhr.open('POST', '/upload');
+                xhr.send(formData);
+            } catch (error) {
+                if (processingInterval) clearInterval(processingInterval);
+                errorMessage.textContent = 'Error: ' + error.message;
+                errorMessage.style.display = 'block';
+                loadingIndicator.style.display = 'none';
+                progressBar.style.display = 'none';
+                progressText.style.display = 'none';
+            }
+        });
+
+        const featuresSelect = document.getElementById('features');
+        const toggleMultiSelectBtn = document.getElementById('toggleMultiSelectBtn');
+        const featureButtonsContainer = document.getElementById('featureButtonsContainer');
+        let isMultiSelectEnabled = false;
+
+        function renderFeatureSelectionButtons() {
+            featureButtonsContainer.innerHTML = '';
+            Array.from(featuresSelect.options).forEach(option => {
+                if (option.value) {
+                    const button = document.createElement('button');
+                    button.textContent = option.textContent;
+                    button.classList.add('feature-select-button');
+                    if (option.selected) button.classList.add('selected');
+                    button.onclick = (e) => {
+                        e.preventDefault();
+                        option.selected = !option.selected;
+                        button.classList.toggle('selected', option.selected);
+                        featuresSelect.dispatchEvent(new Event('change'));
+                    };
+                    featureButtonsContainer.appendChild(button);
+                }
+            });
+        }
+
+        function updateFeatureSelectMode() {
+            featuresSelect.multiple = isMultiSelectEnabled;
+            toggleMultiSelectBtn.textContent = isMultiSelectEnabled ? 'Switch to Single-Select' : 'Switch to Multi-Select';
+            if (isMultiSelectEnabled) {
+                featuresSelect.style.display = 'none';
+                featureButtonsContainer.style.display = 'block';
+                renderFeatureSelectionButtons();
+            } else {
+                featuresSelect.style.display = 'block';
+                featureButtonsContainer.style.display = 'none';
+                featureButtonsContainer.innerHTML = '';
+                if (featuresSelect.selectedOptions.length > 1) {
+                    const firstSelected = featuresSelect.selectedOptions[0];
+                    Array.from(featuresSelect.options).forEach(option => {
+                        option.selected = false;
+                    });
+                    if (firstSelected) firstSelected.selected = true;
+                }
+            }
+        }
+
+        toggleMultiSelectBtn.addEventListener('click', () => {
+            isMultiSelectEnabled = !isMultiSelectEnabled;
+            updateFeatureSelectMode();
+        });
+
+        document.getElementById('analysisType').addEventListener('change', (event) => {
+            const analysisType = event.target.value;
+            updateThemeForAnalysisType(analysisType);
+            const featureSelectionContainer = document.getElementById('featureSelectionContainer');
+            const targetFeatureContainer = document.getElementById('targetFeatureContainer');
+            const targetFeatureSelect = document.getElementById('targetFeature');
+            const graphSelectionContainer = document.getElementById('graphSelectionContainer');
+            featuresSelect.innerHTML = '';
+            targetFeatureSelect.innerHTML = '';
+
+            // Hide report controls and display area when analysis type changes
+            document.getElementById('reportControls').classList.add('hidden');
+            document.getElementById('reportDisplayArea').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden'); // Ensure original results div is visible
+
+            const allColumnsWithTypes = currentAnalysisResults.columns || [];
+
+            const isNumeric = (type) => type.toLowerCase().includes('int') || type.toLowerCase().includes('float') || type.toLowerCase().includes('double') || type.toLowerCase().includes('long');
+            const isCategorical = (type) => type.toLowerCase().includes('string') || type.toLowerCase().includes('boolean');
+
+            const mlApplicableFeatures = allColumnsWithTypes.filter(col =>
+                isNumeric(col.type) || isCategorical(col.type)
+            ).map(col => col.name);
+            const numericFeatures = allColumnsWithTypes.filter(col => isNumeric(col.type)).map(col => col.name);
+            const classificationTargetCandidates = allColumnsWithTypes.filter(col =>
+                isNumeric(col.type) || isCategorical(col.type)
+            ).map(col => col.name);
+
+
+            if (analysisType === 'visualization') {
+                featureSelectionContainer.style.display = 'block';
+                graphSelectionContainer.style.display = 'block';
+                targetFeatureContainer.style.display = 'none';
+                document.getElementById('graphType').dispatchEvent(new Event('change'));
+                toggleMultiSelectBtn.disabled = false;
+            } else if (analysisType === 'report') {
+                featureSelectionContainer.style.display = 'none';
+                graphSelectionContainer.style.display = 'none';
+                targetFeatureContainer.style.display = 'none';
+                // Report specific: No features/target to select, but will show report buttons later
+            } else {
+                featureSelectionContainer.style.display = 'block';
+                graphSelectionContainer.style.display = 'none';
+                toggleMultiSelectBtn.disabled = false;
+
+                if (analysisType === 'regression') {
+                    targetFeatureContainer.style.display = 'block';
+                    mlApplicableFeatures.forEach(col => addOption(featuresSelect, col, col));
+                    numericFeatures.forEach(col => addOption(targetFeatureSelect, col, col));
+                    isMultiSelectEnabled = true;
+                } else if (analysisType === 'classification') {
+                    targetFeatureContainer.style.display = 'block';
+                    mlApplicableFeatures.forEach(col => addOption(featuresSelect, col, col));
+                    classificationTargetCandidates.forEach(col => addOption(targetFeatureSelect, col, col));
+                    isMultiSelectEnabled = true;
+                } else if (analysisType === 'clustering') {
+                    targetFeatureContainer.style.display = 'none';
+                    mlApplicableFeatures.forEach(col => addOption(featuresSelect, col, col));
+                    isMultiSelectEnabled = true;
+                } else if (analysisType === 'exploratory') {
+                    targetFeatureContainer.style.display = 'none';
+                    allColumnsWithTypes.map(col => col.name).forEach(col => addOption(featuresSelect, col, col));
+                    isMultiSelectEnabled = true;
+                } else {
+                    targetFeatureContainer.style.display = 'none';
+                    allColumnsWithTypes.map(col => col.name).forEach(col => addOption(featuresSelect, col, col));
+                    isMultiSelectEnabled = true;
+                }
+            }
+            updateFeatureSelectMode();
+        });
+
+        document.getElementById('graphType').addEventListener('change', (event) => {
+            const graphType = event.target.value;
+            const featuresSelect = document.getElementById('features');
+            featuresSelect.innerHTML = '';
+            const numericFeatures = currentAnalysisResults.columns ? currentAnalysisResults.columns.filter(c =>
+                c.type.toLowerCase().includes('int') ||
+                c.type.toLowerCase().includes('float') ||
+                c.type.toLowerCase().includes('double') ||
+                c.type.toLowerCase().includes('long')
+            ).map(c => c.name) : [];
+
+            if (graphType === 'histogram') {
+                numericFeatures.forEach(col => addOption(featuresSelect, col, col));
+                isMultiSelectEnabled = false;
+                toggleMultiSelectBtn.disabled = true;
+            } else if (['boxplot', 'scatterplot'].includes(graphType)) {
+                numericFeatures.forEach(col => addOption(featuresSelect, col, col));
+                isMultiSelectEnabled = true;
+                toggleMultiSelectBtn.disabled = false;
+            } else {
+                currentAnalysisResults.columns.map(col => col.name).forEach(col => addOption(featuresSelect, col, col));
+                isMultiSelectEnabled = true;
+                toggleMultiSelectBtn.disabled = false;
+            }
+            updateFeatureSelectMode();
+        });
+
+        function addOption(selectElement, text, value) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = text;
+            selectElement.appendChild(option);
+        }
+
+        async function performAnalysis() {
+            if (!currentFileId) {
+                // Removed displayMessageBox
+                return;
+            }
+
+            const analysisType = document.getElementById('analysisType').value;
+            const featuresSelect = document.getElementById('features');
+            let selectedFeatures = [];
+            let targetFeature = '';
+            let plotType = '';
+
+            if (isMultiSelectEnabled) {
+                selectedFeatures = Array.from(featuresSelect.options)
+                    .filter(option => option.selected)
+                    .map(option => option.value);
+            } else {
+                selectedFeatures = [featuresSelect.value].filter(val => val);
+            }
+
+            // Hide previous report/results and controls
+            document.getElementById('reportControls').classList.add('hidden');
+            document.getElementById('reportDisplayArea').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden'); // Ensure original results div is visible for non-report tasks
+
+            if (analysisType === 'visualization') {
+                plotType = document.getElementById('graphType').value;
+                if (plotType === 'histogram') {
+                    if (!selectedFeatures[0]) {
+                        // Removed displayMessageBox
+                        return;
+                    }
+                } else if (plotType === 'boxplot') {
+                    if (selectedFeatures.length === 0) {
+                        // Removed displayMessageBox
+                        return;
+                    }
+                } else if (plotType === 'scatterplot') {
+                    if (selectedFeatures.length < 2) {
+                        // Removed displayMessageBox
+                        return;
+                    }
+                } else {
+                    if (selectedFeatures.length === 0) {
+                        selectedFeatures = currentAnalysisResults.columns ? currentAnalysisResults.columns.filter(c => c.type.toLowerCase().includes('int') || c.type.toLowerCase().includes('float') || c.type.toLowerCase().includes('double')).map(c => c.name) : [];
+                    }
+                }
+            } else if (analysisType === 'report') {
+                // No feature/target selection needed for report, just proceed to generate
+            } else {
+                if (selectedFeatures.length === 0 && analysisType !== 'exploratory') {
+                    // Removed displayMessageBox
+                    return;
+                }
+                targetFeature = document.getElementById('targetFeature').value;
+                if ((analysisType === 'regression' || analysisType === 'classification') && !targetFeature) {
+                    // Removed displayMessageBox
+                    return;
+                }
+            }
+
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resultsSection = document.getElementById('resultsSection');
+            const results = document.getElementById('results'); // This is the original results div
+            const reportDisplayArea = document.getElementById('reportDisplayArea'); // This is the new report display div
+
+            const analysisProgressBarContainer = document.getElementById('analysisProgressBarContainer');
+            const analysisProgress = document.getElementById('analysisProgress');
+            const analysisProgressText = document.getElementById('analysisProgressText');
+
+            loadingIndicator.style.display = 'block';
+            loadingIndicator.querySelector('p').textContent = 'Analyzing data...';
+            results.innerHTML = ''; // Clear original results div
+            reportDisplayArea.innerHTML = '<p>Report will appear here.</p>'; // Clear report display area
+            
+            analysisProgressBarContainer.style.display = 'block';
+            analysisProgress.style.width = '0%';
+            analysisProgressText.textContent = '0% Analyzing...';
+
+            let currentAnalysisProgress = 0;
+            if (analysisProcessingInterval) clearInterval(analysisProcessingInterval);
+            analysisProcessingInterval = setInterval(() => {
+                if (currentAnalysisProgress < 95) {
+                    currentAnalysisProgress = Math.min(95, currentAnalysisProgress + 5);
+                    analysisProgress.style.width = `${currentAnalysisProgress}%`;
+                    analysisProgressText.textContent = `${currentAnalysisProgress}% Analyzing...`;
+                }
+            }, 1000);
+
+            try {
+                if (analysisType === 'report') {
+                    results.classList.add('hidden'); // Hide original results div for report
+                    reportDisplayArea.classList.remove('hidden'); // Show report display area
+                    reportDisplayArea.innerHTML = '<p>Generating report...</p>';
+                    const res = await fetch(`/generate_report/${currentFileId}`, { method: 'POST' });
+                    const data = await res.json();
+
+                    if (res.ok && data.report_html) {
+                        lastHtmlReportContent = data.report_html;
+                        lastTxtReportContent = data.txt_report_content; // Store TXT report content
+                        lastTxtReportDownloadUrl = data.download_url; // Store the download URL
+
+                        // Initially show HTML report
+                        reportDisplayArea.innerHTML = lastHtmlReportContent;
+                        document.getElementById('toggleReportDisplayBtn').textContent = 'Show TXT Report'; // Set initial text
+                        isHtmlReportCurrentlyDisplayed = true; // Set initial state
+
+                        document.getElementById('reportControls').classList.remove('hidden'); // Show report buttons
+                        reportGenerated = true;
+                    } else {
+                        reportDisplayArea.innerHTML = `<p style="color:red;">${data.error || 'Failed to generate report.'}</p>`;
+                        document.getElementById('reportControls').classList.add('hidden');
+                        reportGenerated = false;
+                    }
+                    analysisProgress.style.width = '100%';
+                    analysisProgressText.textContent = 'Analysis Complete!';
+                    setTimeout(() => {
+                        analysisProgressBarContainer.style.display = 'none';
+                        loadingIndicator.style.display = 'none';
+                    }, 500);
+                    return;
+                }
+
+                // For non-report analysis types, ensure report controls are hidden and original results are visible
+                document.getElementById('reportControls').classList.add('hidden');
+                document.getElementById('reportDisplayArea').classList.add('hidden');
+                document.getElementById('results').classList.remove('hidden');
+
+
+                let apiUrl;
+                let requestBody;
+                if (analysisType === 'visualization') {
+                    apiUrl = `/visualization/${currentFileId}/${plotType}`;
+                    requestBody = {
+                        selected_features: selectedFeatures
+                    };
+                } else {
+                    apiUrl = `/analyze/${currentFileId}`;
+                    requestBody = {
+                        analysis_type: analysisType,
+                        selected_features: selectedFeatures,
+                        target_feature: targetFeature
+                    };
+                }
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Analysis failed');
+                }
+
+                results.innerHTML = ''; // Clear original results div before populating
+
+                if (analysisType === 'visualization') {
+                    if (data.plot_url) {
+                        const iframe = document.createElement("iframe");
+                        iframe.src = data.plot_url + "?t=" + new Date().getTime();
+                        iframe.style.width = "100%";
+                        iframe.style.height = "600px";
+                        iframe.style.border = "none";
+                        results.appendChild(iframe);
+                    } else {
+                        results.innerHTML = `<p style="color:red;">Error: No plot URL received.</p>`;
+                    }
+                } else {
+                    if (data.accuracy !== undefined) {
+                        const accuracyEl = document.createElement('p');
+                        let accuracyText = data.accuracy;
+                        if (typeof data.accuracy === 'number') {
+                            accuracyText = (data.accuracy * 100).toFixed(2) + '%';
+                        }
+                        accuracyEl.innerHTML = `<strong>Accuracy:</strong> ${accuracyText}`;
+                        results.appendChild(accuracyEl);
+                        if (data.correct_predictions !== undefined &&
+                            data.total_test_samples !== undefined &&
+                            data.accuracy !== 'N/A - Test set was empty') {
+                            const countsEl = document.createElement('p');
+                            countsEl.innerHTML = `<em>Details: ${data.correct_predictions} correct predictions out of ${data.total_test_samples} total test samples.</em>`;
+                            results.appendChild(countsEl);
+                        }
+                    }
+                    if (data.message) {
+                        const messageEl = document.createElement('p');
+                        messageEl.style.color = data.accuracy === 'N/A - Test set was empty' || data.message.toLowerCase().includes('warning') ? 'orange' : 'green';
+                        messageEl.textContent = data.message;
+                        results.appendChild(messageEl);
+                    }
+                    // Display prediction sample for regression, classification, and clustering
+                    if (data.prediction_sample && data.prediction_sample.length > 0 && data.prediction_sample_headers) {
+                        const tableTitle = document.createElement('h4');
+                        tableTitle.textContent = 'Prediction Sample (First 10):';
+                        results.appendChild(tableTitle);
+                        results.appendChild(createDynamicTable(data.prediction_sample_headers, data.prediction_sample));
+                    } else if (data.prediction_sample && data.prediction_sample.length === 0) {
+                        const noSampleEl = document.createElement('p');
+                        noSampleEl.textContent = 'No prediction samples available (e.g., test set might have been empty or too small).';
+                        results.appendChild(noSampleEl);
+                    }
+                    if (analysisType === 'exploratory' && data.descriptive_stats) {
+                        const statsTitle = document.createElement('h4');
+                        statsTitle.textContent = 'Descriptive Statistics:';
+                        results.appendChild(statsTitle);
+                        const statsHeaders = Object.keys(data.descriptive_stats);
+                        const statsRows = [];
+                        const featureNames = Object.keys(data.descriptive_stats[statsHeaders[0]]);
+                        featureNames.forEach(feature => {
+                            let rowData = { 'Feature': feature };
+                            statsHeaders.forEach(statName => {
+                                rowData[statName] = data.descriptive_stats[statName][feature] !== undefined ? data.descriptive_stats[statName][feature].toFixed(2) : 'N/A';
+                            });
+                            statsRows.push(rowData);
+                        });
+                        results.appendChild(createDynamicTable(['Feature'].concat(statsHeaders), statsRows));
+                    }
+                    if (data.model_id && data.model_save_path && data.model_input_schema && data.target_column_original) {
+                        createPredictionForm(data.model_save_path, data.model_input_schema, data.target_column_original, data.pipeline_label_column);
+                    }
+                    if (data.cluster_sizes && data.k) {
+                        const clusterTitle = document.createElement('h4');
+                        clusterTitle.innerText = `Clustering Results (k=${data.k}):`;
+                        results.appendChild(clusterTitle);
+                        const csTableData = Object.entries(data.cluster_sizes).map(([cluster, count]) => ({ Cluster: cluster, Count: count }));
+                        results.appendChild(createDynamicTable(['Cluster', 'Count'], csTableData));
+                        if (data.cluster_centers && data.cluster_center_feature_names) {
+                            const ccTitle = document.createElement('p');
+                            ccTitle.innerHTML = `<strong>Cluster Centers (Features: ${data.cluster_center_feature_names.join(', ')}):</strong>`;
+                            results.appendChild(ccTitle);
+                            const ccTableData = data.cluster_centers.map((center, i) => {
+                                let row = { 'Center #': i };
+                                data.cluster_center_feature_names.forEach((name, j) => {
+                                    row[name] = center[j] !== null && center[j] !== undefined ? center[j] : 'N/A';
+                                });
+                                return row;
+                            });
+                            results.appendChild(createDynamicTable(['Center #'].concat(data.cluster_center_feature_names), ccTableData));
+                        }
+                    }
+                    if (data.correlation_plot) {
+                        const corrTitle = document.createElement('h4');
+                        corrTitle.innerText = 'Correlation Matrix:';
+                        results.appendChild(corrTitle);
+                        const corrImg = document.createElement('img');
+                        corrImg.src = data.plot_url + '?t=' + new Date().getTime();
+                        corrImg.alt = 'Correlation Matrix';
+                        corrImg.style.maxWidth = '100%';
+                        corrImg.style.height = 'auto';
+                        results.appendChild(corrImg);
+                    }
+                }
+                resultsSection.style.display = 'block';
+            } catch (error) {
+                results.innerHTML = '<p style="color: red;">Error: ' + error.message + '</p>';
+            } finally {
+                if (analysisProcessingInterval) clearInterval(analysisProcessingInterval);
+                analysisProgress.style.width = '100%';
+                analysisProgressText.textContent = 'Analysis Complete!';
+                setTimeout(() => {
+                    analysisProgressBarContainer.style.display = 'none';
+                    loadingIndicator.style.display = 'none';
+                }, 500);
+            }
+        }
+
+        // Functions for report switching
+        function toggleReportDisplay() {
+            const reportDisplayArea = document.getElementById('reportDisplayArea');
+            const resultsDiv = document.getElementById('results'); // Original results div
+            const toggleButton = document.getElementById('toggleReportDisplayBtn');
+
+            if (isHtmlReportCurrentlyDisplayed) {
+                // Currently showing HTML, switch to TXT content
+                if (lastTxtReportContent) {
+                    reportDisplayArea.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; color: white; background-color: var(--card-bg); padding: 1rem; border-radius: 6px;">${lastTxtReportContent}</pre>`; // Display TXT content
+                    toggleButton.textContent = 'Show HTML Report';
+                    isHtmlReportCurrentlyDisplayed = false;
+                    // Removed displayMessageBox
+                } else {
+                    reportDisplayArea.innerHTML = '<p style="color:red;">No TXT report content available.</p>';
+                    toggleButton.textContent = 'Show HTML Report';
+                    isHtmlReportCurrentlyDisplayed = false;
+                    // Removed displayMessageBox
+                }
+            } else {
+                // Currently showing TXT, switch back to HTML
+                if (lastHtmlReportContent) {
+                    reportDisplayArea.innerHTML = lastHtmlReportContent;
+                    toggleButton.textContent = 'Show TXT Report';
+                    isHtmlReportCurrentlyDisplayed = true;
+                    // Removed displayMessageBox
+                } else {
+                    reportDisplayArea.innerHTML = '<p style="color:red;">No HTML report content available.</p>';
+                    toggleButton.textContent = 'Show TXT Report';
+                    isHtmlReportCurrentlyDisplayed = false;
+                    // Removed displayMessageBox
+                }
+            }
+            // Ensure display areas are correctly managed
+            reportDisplayArea.classList.remove('hidden');
+            resultsDiv.classList.add('hidden'); // Always hide original results when in report mode
+        }
+
+        function downloadTxtReportDirectly() {
+            if (lastTxtReportDownloadUrl) {
+                // Trigger a download for the TXT content
+                const blob = new Blob([lastTxtReportContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                // Use the original filename with _report.txt suffix for the download
+                const fileInput = document.getElementById('fileInput');
+                const originalFileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'report';
+                const baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.')) || originalFileName;
+                a.download = `${baseName}_report.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                // Removed displayMessageBox
+            } else {
+                // Removed displayMessageBox
+            }
+        }
+
+        // Add event listeners for the new buttons
+        document.getElementById('toggleReportDisplayBtn').addEventListener('click', toggleReportDisplay);
+        document.getElementById('downloadTxtReportBtn').addEventListener('click', downloadTxtReportDirectly);
+
+        function createPredictionForm(modelUriPath, modelInputSchema, targetColumnOriginal, pipelineLabelColumn) {
+            const resultsDiv = document.getElementById('results');
+            let existingForm = document.getElementById('livePredictionForm');
+            if (existingForm) existingForm.remove();
+            let existingPredResult = document.getElementById('livePredictionResult');
+            if (existingPredResult) existingPredResult.remove();
+
+            const formContainer = document.createElement('div');
+            formContainer.id = 'livePredictionForm';
+            formContainer.innerHTML = '<h4>Make a New Prediction</h4>';
+
+            const form = document.createElement('form');
+            form.onsubmit = async (event) => {
+                event.preventDefault();
+                await handlePrediction(event, modelUriPath, modelInputSchema, targetColumnOriginal, pipelineLabelColumn);
+            };
+
+            modelInputSchema.forEach(colInfo => {
+                if (!colInfo.is_target) {
+                    const featureDiv = document.createElement('div');
+                    featureDiv.classList.add('feature-input');
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `pred_input_${colInfo.name}`;
+                    label.textContent = `${colInfo.name} (${colInfo.original_type}):`;
+                    featureDiv.appendChild(label);
+
+                    const input = document.createElement('input');
+                    input.type = (colInfo.original_type.toLowerCase().includes('int') || colInfo.original_type.toLowerCase().includes('double') || colInfo.original_type.toLowerCase().includes('float')) ? 'number' : 'text';
+                    if (input.type === 'number') input.step = 'any';
+                    input.id = `pred_input_${colInfo.name}`;
+                    input.name = colInfo.name;
+                    input.required = true;
+                    featureDiv.appendChild(input);
+                    form.appendChild(featureDiv);
+                }
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.textContent = 'Predict';
+            form.appendChild(submitButton);
+
+            formContainer.appendChild(form);
+            resultsDiv.appendChild(formContainer);
+
+            const predictionResultEl = document.createElement('div');
+            predictionResultEl.id = 'livePredictionResult';
+            resultsDiv.appendChild(predictionResultEl);
+        }
+
+        async function handlePrediction(event, modelUriPath, modelInputSchema, targetColumnOriginal, pipelineLabelColumn) {
+            const form = event.target;
+            const features = {};
+            let allFieldsValid = true;
+
+            modelInputSchema.forEach(colInfo => {
+                if (!colInfo.is_target) {
+                    const inputElement = form.elements[colInfo.name];
+                    if (inputElement) {
+                        features[colInfo.name] = inputElement.value;
+                    } else {
+                        allFieldsValid = false;
+                    }
+                }
+            });
+
+            if (!allFieldsValid) {
+                // Removed displayMessageBox
+                return;
+            }
+
+            const predictionResultEl = document.getElementById('livePredictionResult');
+            predictionResultEl.innerHTML = '<p><i>Calculating prediction...</i></p>';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model_uri_path: modelUriPath,
+                        features: features,
+                        model_input_schema: modelInputSchema
+                    })
+                });
+                const resultData = await response.json();
+
+                if (response.ok) {
+                    predictionResultEl.innerHTML = `<p style="font-weight: bold; color: white;">Predicted ${targetColumnOriginal || 'Value'}: ${resultData.prediction}</p>`;
+                } else {
+                    predictionResultEl.innerHTML = `<p style="color: red;">Prediction Error: ${resultData.error || 'Unknown error'}</p>`;
+                }
+            } catch (error) {
+                predictionResultEl.innerHTML = `<p style="color: red;">Prediction request failed: ${error.message}</p>`;
+            }
+        }
+
+        // Removed displayMessageBox function
+
+        window.addEventListener('resize', () => { });
+
+        // Function to update log box height
+        function updateLogBoxHeight() {
+            const logsText = document.getElementById('logsText');
+            // Use scrollHeight to get the full content height
+            const contentHeight = logsText.scrollHeight;
+            const maxHeight = 200; // Max height for the log box (approx 10 lines * line-height)
+            const minHeight = 50; // Minimum height for the log box (approx 2-3 lines)
+
+            // Set height to content height, but cap at maxHeight and ensure at least minHeight
+            logsText.style.height = `${Math.min(Math.max(contentHeight, minHeight), maxHeight)}px`;
+        }
+
+        // Log related functions
+        function fetchTerminalLogs() {
+            fetch('/terminal-logs')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const logsText = document.getElementById('logsText');
+                        const logsContentDiv = logsText.parentElement; // The div that contains the pre tag and has overflow-y
+
+                        // Check if the user is currently scrolled to the very bottom
+                        const isScrolledToBottom = logsContentDiv.scrollHeight - logsContentDiv.scrollTop <= logsContentDiv.clientHeight + 1; // +1 for a small buffer
+
+                        const newLogContent = data.logs.join('');
+                        if (newLogContent !== lastLogContent) { // Only update if content has changed
+                            logsText.textContent = newLogContent;
+                            lastLogContent = newLogContent;
+                            updateLogBoxHeight(); // Update height when content changes
+
+                            if (isScrolledToBottom) {
+                                // If the user was at the bottom, auto-scroll to the new bottom
+                                logsContentDiv.scrollTop = logsContentDiv.scrollHeight;
+                            }
+                            // If the user has scrolled up, do not auto-scroll
+                        }
+                    }
+                })
+                .catch(error => { console.error('Error fetching terminal logs:', error); });
+        }
+
+        // Event listener for the floating log toggle button
+        document.getElementById('logToggleButton').addEventListener('click', function () {
+            const inlineLogsContainer = document.getElementById('inlineTerminalLogsContainer');
+            const toggleButton = document.getElementById('logToggleButton');
+
+            if (inlineLogsContainer.style.display === 'none' || inlineLogsContainer.style.display === '') {
+                inlineLogsContainer.style.display = 'block';
+                fetchTerminalLogs(); // Fetch logs immediately when shown
+                if (!logRefreshIntervalId) { // Only start interval if not already running
+                    logRefreshIntervalId = setInterval(fetchTerminalLogs, 2000); // Start refreshing every 2 seconds
+                }
+                toggleButton.textContent = 'Hide Logs';
+                // Removed displayMessageBox
+            } else {
+                inlineLogsContainer.style.display = 'none';
+                if (logRefreshIntervalId) {
+                    clearInterval(logRefreshIntervalId); // Stop refreshing when hidden
+                    logRefreshIntervalId = null;
+                }
+                toggleButton.textContent = 'Show Logs';
+                // Removed displayMessageBox
+            }
+        });
+
+        // Event listeners for the inline log controls
+        document.getElementById('clearLogsBtn').addEventListener('click', function () {
+            document.getElementById('logsText').textContent = ''; // Clear logs on browser
+            lastLogContent = ''; // Clear stored content as well
+            if (logRefreshIntervalId) {
+                clearInterval(logRefreshIntervalId); // Stop refreshing when cleared
+                logRefreshIntervalId = null;
+            }
+            // Reset height to minimum when cleared
+            document.getElementById('logsText').style.height = '50px'; 
+            // Removed displayMessageBox
+        });
+
+        document.getElementById('refreshLogsBtn').addEventListener('click', function () {
+            fetchTerminalLogs(); // Reload logs from file
+            if (!logRefreshIntervalId) { // Restart auto-refresh if it was stopped (e.g., by clear)
+                logRefreshIntervalId = setInterval(fetchTerminalLogs, 2000);
+            }
+            // Removed displayMessageBox
+        });
+
+        document.getElementById('toggleMatrixModeBtn').addEventListener('click', function () {
+            const logsText = document.getElementById('logsText'); // Target the <pre> for matrix mode
+            const toggleButton = document.getElementById('toggleMatrixModeBtn');
+            logsText.classList.toggle('matrix-mode');
+            if (logsText.classList.contains('matrix-mode')) {
+                toggleButton.textContent = 'Normal Mode';
+                // Removed displayMessageBox
+            } else {
+                toggleButton.textContent = 'Matrix Mode';
+                // Removed displayMessageBox
+            }
+        });
+    </script>
+</body>
+
+</html>

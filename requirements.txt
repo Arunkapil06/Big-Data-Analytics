@@ -1,0 +1,15 @@
+flask
+pyspark
+pymongo
+pandas
+numpy
+scikit-learn
+matplotlib
+plotly
+python-dotenv
+flask-cors
+pyarrow
+kaleido
+nbformat
+pytest
+seaborn

@@ -1,0 +1,73 @@
+DATA ANALYSIS REPORT
+============================================================
+File: Medical_cost_dataset.csv
+Generated: 2025-06-01 14:51:28
+Total Records: 1000
+Columns: age, sex, bmi, children, smoker, charges
+============================================================
+
+Feature Information (Numeric)
+------------------------------
+Feature  | Min       | Max      | Mean      
+---------+-----------+----------+-----------
+age      | 18        | 64       | 40.563    
+bmi      | 13.09     | 49.3     | 30.0892   
+charges  | -31582.38 | 47816.65 | 13364.2001
+children | 0         | 4        | 2.027     
+
+Data Transformation Steps
+------------------------------
+Task           | Transformation                                                         
+---------------+------------------------------------------------------------------------
+Regression     | Dropped rows with nulls in ['age', 'bmi', 'charges', 'children']       
+Classification | Dropped rows with nulls in ['age', 'bmi', 'charges', 'children', 'sex']
+Clustering     | Dropped rows with nulls in ['age', 'bmi', 'charges', 'children']       
+
+Model Training Summary
+------------------------------
+Task                           | Target   | Features                    | Result                                    
+-------------------------------+----------+-----------------------------+-------------------------------------------
+Regression (Random Forest)     | children | age, bmi, charges           | RMSE: 1.377231826283173                   
+Classification (Random Forest) | sex      | age, bmi, charges, children | Accuracy: 0.5389985818697501              
+Clustering (KMeans, k=3)       | -        | age, bmi, charges, children | Cluster Sizes: {0: 4349, 1: 2558, 2: 2602}
+
+Prediction Samples
+------------------------------
+Top 5 Regression Predictions:
+age | bmi | charges | label | prediction        
+----+-----+---------+-------+-------------------
+19  | 30  | 17281   | 4     | 2.1068981634260053
+64  | 40  | 16693   | 4     | 2.030115628169627 
+19  | 29  | 29681   | 1     | 1.9922146709341564
+26  | 41  | 14662   | 0     | 2.1283397679468425
+58  | 36  | 26999   | 1     | 1.8302779869056038
+Top 5 Classification Predictions:
+age | bmi | charges | children | label | prediction
+----+-----+---------+----------+-------+-----------
+19  | 30  | 17281   | 4        | 0     | 1.0       
+64  | 40  | 16693   | 4        | 1     | 1.0       
+19  | 29  | 29681   | 1        | 1     | 1.0       
+26  | 41  | 14662   | 0        | 3     | 1.0       
+58  | 36  | 26999   | 1        | 0     | 0.0       
+Top 5 Cluster Assignments:
+prediction
+----------
+0         
+0         
+1         
+0         
+1         
+
+Key Findings
+------------------------------
+- Regression RMSE: 1.377231826283173
+- Classification Accuracy: 0.5389985818697501
+- Cluster sizes: {0: 4349, 1: 2558, 2: 2602}
+
+Conclusions
+------------------------------
+- Models were successfully trained and evaluated. See above for details.
+
+============================================================
+End of Report
+============================================================

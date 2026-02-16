@@ -1,0 +1,25 @@
+{
+    "hotkeys": {
+        "oil": "insert",
+        "gym": "home",
+        "auto_run": "page up",
+        "elec": "e",
+        "mine": "delete",
+        "auto_walk": "end",
+        "generic_script": "page down"
+    },
+    "remembered_hotkey_states": {
+        "oil": false,
+        "gym": false,
+        "auto_run": false,
+        "elec": false,
+        "mine": false,
+        "auto_walk": false,
+        "generic_script": false
+    },
+    "oil_hold_duration": 3.2,
+    "generic_script_settings": {
+        "mode": "hold",
+        "target_key": ""
+    }
+}

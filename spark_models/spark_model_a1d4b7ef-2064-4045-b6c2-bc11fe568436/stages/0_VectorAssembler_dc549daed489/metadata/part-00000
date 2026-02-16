@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1748864715391,"sparkVersion":"3.5.5","uid":"VectorAssembler_dc549daed489","paramMap":{"inputCols":["StudyHours","AttendancePercentage","PassedExam"],"handleInvalid":"skip","outputCol":"features_raw"},"defaultParamMap":{"handleInvalid":"error","outputCol":"VectorAssembler_dc549daed489__output"}}

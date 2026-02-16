@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1747889447150,"sparkVersion":"3.5.5","uid":"VectorAssembler_dad9b59237e9","paramMap":{"outputCol":"features_pipeline","handleInvalid":"skip","inputCols":["bmi","children","charges"]},"defaultParamMap":{"outputCol":"VectorAssembler_dad9b59237e9__output","handleInvalid":"error"}}

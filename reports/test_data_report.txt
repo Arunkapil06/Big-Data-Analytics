@@ -1,0 +1,55 @@
+DATA ANALYSIS REPORT
+============================================================
+File: test_data.csv
+Generated: 2025-06-01 20:53:38
+Total Records: 5
+Columns: id, name, age, salary, department
+============================================================
+
+Feature Information (Numeric)
+------------------------------
+Feature | Min   | Max   | Mean      
+--------+-------+-------+-----------
+age     | 28    | 42    | 34.6000   
+id      | 1     | 5     | 3.0000    
+salary  | 45000 | 70000 | 56000.0000
+
+Data Transformation Steps
+------------------------------
+Task                         | Transformation                                         
+-----------------------------+--------------------------------------------------------
+Numeric Feature Handling     | Casting to DoubleType, Vector Assembly, Standardization
+Categorical Feature Handling | String Indexing                                        
+Missing Value Handling       | Rows with null labels are dropped                      
+
+Model Training Summary
+------------------------------
+Task                     | Target     | Features                     | Result                                                                      
+-------------------------+------------+------------------------------+-----------------------------------------------------------------------------
+Regression               | age        | id, salary, department, name | Failed: requirement failed: Output column department_indexed already exists.
+Classification           | department | age, id, salary, name        | Failed: requirement failed: Output column name_indexed already exists.      
+Clustering (KMeans, k=3) | -          | age, id, salary              | Cluster Sizes: {'0': 1, '1': 2, '2': 2}                                     
+
+
+Top 10 Predictions for Clustering (KMeans, k=3)
+----------------------------------------------------
+age     | id     | salary     | Assigned_Cluster_ID
+--------+--------+------------+--------------------
+30.0000 | 1.0000 | 50000.0000 | 1                  
+35.0000 | 2.0000 | 60000.0000 | 1                  
+28.0000 | 3.0000 | 45000.0000 | 0                  
+42.0000 | 4.0000 | 70000.0000 | 2                  
+38.0000 | 5.0000 | 55000.0000 | 2                  
+
+
+Key Findings
+------------------------------
+- Cluster sizes: {'0': 1, '1': 2, '2': 2}
+
+Conclusions
+------------------------------
+- Models were successfully trained and evaluated. See above for details.
+
+============================================================
+End of Report
+============================================================

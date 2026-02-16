@@ -1,0 +1,6 @@
+id,name,age,salary,department,performance_score,years_experience,projects_completed,education_level,last_promotion,skills,attendance_rate,remote_work_days,training_completed
+1,John Smith,32,75000.50,Engineering,4.2,8,15,Masters,2022-06-15,"Python,Java,SQL",0.95,3,true
+2,Sarah Johnson,28,65000.75,Marketing,4.5,5,12,Bachelors,2023-01-10,"Marketing,Analytics,Social Media",0.98,2,true
+3,Michael Chen,41,95000.25,Engineering,4.8,15,28,PhD,2023-03-22,"Python,Machine Learning,AI",0.92,4,true
+4,Emily Davis,35,70000.00,Sales,4.0,10,20,Bachelors,2022-11-30,"Sales,Negotiation,CRM",0.88,1,false
+5,Robert Wilson,45,85000.75,Marketing,3.9,18,32,Masters,2022-08-15,"Strategy,Team Leadership,Analytics",0.94,2,true 

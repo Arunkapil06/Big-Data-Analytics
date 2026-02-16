@@ -1,0 +1,92 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "John Smith",
+            "age": 32,
+            "salary": 75000.50,
+            "department": "Engineering",
+            "performance_score": 4.2,
+            "years_experience": 8,
+            "projects_completed": 15,
+            "education_level": "Masters",
+            "last_promotion": "2022-06-15",
+            "skills": ["Python", "Java", "SQL"],
+            "attendance_rate": 0.95,
+            "remote_work_days": 3,
+            "training_completed": true
+        },
+        {
+            "id": 2,
+            "name": "Sarah Johnson",
+            "age": 28,
+            "salary": 65000.75,
+            "department": "Marketing",
+            "performance_score": 4.5,
+            "years_experience": 5,
+            "projects_completed": 12,
+            "education_level": "Bachelors",
+            "last_promotion": "2023-01-10",
+            "skills": ["Marketing", "Analytics", "Social Media"],
+            "attendance_rate": 0.98,
+            "remote_work_days": 2,
+            "training_completed": true
+        },
+        {
+            "id": 3,
+            "name": "Michael Chen",
+            "age": 41,
+            "salary": 95000.25,
+            "department": "Engineering",
+            "performance_score": 4.8,
+            "years_experience": 15,
+            "projects_completed": 28,
+            "education_level": "PhD",
+            "last_promotion": "2023-03-22",
+            "skills": ["Python", "Machine Learning", "AI"],
+            "attendance_rate": 0.92,
+            "remote_work_days": 4,
+            "training_completed": true
+        },
+        {
+            "id": 4,
+            "name": "Emily Davis",
+            "age": 35,
+            "salary": 70000.00,
+            "department": "Sales",
+            "performance_score": 4.0,
+            "years_experience": 10,
+            "projects_completed": 20,
+            "education_level": "Bachelors",
+            "last_promotion": "2022-11-30",
+            "skills": ["Sales", "Negotiation", "CRM"],
+            "attendance_rate": 0.88,
+            "remote_work_days": 1,
+            "training_completed": false
+        },
+        {
+            "id": 5,
+            "name": "Robert Wilson",
+            "age": 45,
+            "salary": 85000.75,
+            "department": "Marketing",
+            "performance_score": 3.9,
+            "years_experience": 18,
+            "projects_completed": 32,
+            "education_level": "Masters",
+            "last_promotion": "2022-08-15",
+            "skills": ["Strategy", "Team Leadership", "Analytics"],
+            "attendance_rate": 0.94,
+            "remote_work_days": 2,
+            "training_completed": true
+        }
+    ],
+    "metadata": {
+        "total_records": 5,
+        "departments": ["Engineering", "Marketing", "Sales"],
+        "education_levels": ["Bachelors", "Masters", "PhD"],
+        "average_salary": 78000.25,
+        "data_generated": "2024-03-14",
+        "version": "1.0"
+    }
+} 

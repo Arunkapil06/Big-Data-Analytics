@@ -1,0 +1,93 @@
+DATA ANALYSIS REPORT
+============================================================
+File: student.csv
+Generated: 2025-06-09 14:01:51
+Total Records: 96
+Columns: StudyHours, AttendancePercentage, PassedExam
+============================================================
+
+Feature Information (Numeric)
+------------------------------
+Feature              | Min | Max | Mean   
+---------------------+-----+-----+--------
+AttendancePercentage | 20  | 100 | 65.7708
+PassedExam           | 0   | 1   | 0.5833 
+StudyHours           | 1   | 12  | 6.5000 
+
+Data Transformation Steps
+------------------------------
+Task                     | Transformation                                         
+-------------------------+--------------------------------------------------------
+Numeric Feature Handling | Casting to DoubleType, Vector Assembly, Standardization
+Missing Value Handling   | Rows with null labels are dropped                      
+
+Model Training Summary
+------------------------------
+Task                           | Target               | Features                                     | Result                                    
+-------------------------------+----------------------+----------------------------------------------+-------------------------------------------
+Regression (Linear Regression) | AttendancePercentage | PassedExam, StudyHours                       | RMSE: 7.6030                              
+Classification (Random Forest) | PassedExam           | AttendancePercentage, StudyHours             | Accuracy: 100.00%                         
+Clustering (KMeans, k=3)       | -                    | AttendancePercentage, PassedExam, StudyHours | Cluster Sizes: {'0': 32, '1': 40, '2': 24}
+
+
+Top 10 Predictions for Regression (Linear Regression)
+----------------------------------------------------------
+PassedExam | StudyHours | AttendancePercentage | prediction
+-----------+------------+----------------------+-----------
+0.0000     | 1.0000     | 40.0000              | 30.6417   
+0.0000     | 2.0000     | 45.0000              | 34.3497   
+0.0000     | 3.0000     | 50.0000              | 38.0577   
+0.0000     | 4.0000     | 55.0000              | 41.7657   
+0.0000     | 5.0000     | 60.0000              | 45.4737   
+0.0000     | 1.0000     | 30.0000              | 30.6417   
+0.0000     | 2.0000     | 35.0000              | 34.3497   
+0.0000     | 3.0000     | 40.0000              | 38.0577   
+0.0000     | 4.0000     | 45.0000              | 41.7657   
+0.0000     | 5.0000     | 50.0000              | 45.4737   
+
+
+Top 10 Predictions for Classification (Random Forest)
+----------------------------------------------------------
+AttendancePercentage | StudyHours | PassedExam_indexed_label | prediction
+---------------------+------------+--------------------------+-----------
+40.0000              | 1.0000     | 0.0000                   | 0.0000    
+45.0000              | 2.0000     | 0.0000                   | 0.0000    
+50.0000              | 3.0000     | 0.0000                   | 0.0000    
+55.0000              | 4.0000     | 0.0000                   | 0.0000    
+60.0000              | 5.0000     | 0.0000                   | 0.0000    
+30.0000              | 1.0000     | 0.0000                   | 0.0000    
+35.0000              | 2.0000     | 0.0000                   | 0.0000    
+40.0000              | 3.0000     | 0.0000                   | 0.0000    
+45.0000              | 4.0000     | 0.0000                   | 0.0000    
+50.0000              | 5.0000     | 0.0000                   | 0.0000    
+
+
+Top 10 Predictions for Clustering (KMeans, k=3)
+----------------------------------------------------
+AttendancePercentage | PassedExam | StudyHours | Assigned_Cluster_ID
+---------------------+------------+------------+--------------------
+40.0000              | 0.0000     | 1.0000     | 1                  
+45.0000              | 0.0000     | 2.0000     | 1                  
+50.0000              | 0.0000     | 3.0000     | 1                  
+55.0000              | 0.0000     | 4.0000     | 1                  
+60.0000              | 0.0000     | 5.0000     | 1                  
+30.0000              | 0.0000     | 1.0000     | 1                  
+35.0000              | 0.0000     | 2.0000     | 1                  
+40.0000              | 0.0000     | 3.0000     | 1                  
+45.0000              | 0.0000     | 4.0000     | 1                  
+50.0000              | 0.0000     | 5.0000     | 1                  
+
+
+Key Findings
+------------------------------
+- Regression RMSE: 7.6030
+- Classification Accuracy: 100.00%
+- Cluster sizes: {'0': 32, '1': 40, '2': 24}
+
+Conclusions
+------------------------------
+- Models were successfully trained and evaluated. See above for details.
+
+============================================================
+End of Report
+============================================================

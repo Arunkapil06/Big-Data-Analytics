@@ -1,0 +1,252 @@
+:root {
+    --primary-color: #2196F3;
+    --primary-dark: #1976D2;
+    --success-color: #4CAF50;
+    --error-color: #f44336;
+    --text-color: #333;
+    --bg-color: #f5f7fa;
+    --card-bg: #ffffff;
+    --border-radius: 12px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-dark);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.upload-section {
+    text-align: center;
+    padding: 3rem;
+    border: 2px dashed #ccc;
+    border-radius: var(--border-radius);
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+}
+
+.upload-section h2 {
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+}
+
+.file-input-container {
+    margin: 1.5rem 0;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+    background-color: var(--primary-dark);
+}
+
+.analysis-section {
+    display: none;
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+}
+
+.feature-selection {
+    margin: 2rem 0;
+}
+
+.feature-selection h3 {
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+select[multiple] {
+    height: 200px;
+}
+
+button {
+    background-color: var(--success-color);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    background-color: #388E3C;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.progress-container {
+    margin-top: 1.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    display: none;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    display: none;
+}
+
+.error-message {
+    color: var(--error-color);
+    background-color: #ffebee;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    display: none;
+}
+
+.results-section {
+    margin-top: 2rem;
+}
+
+.results-section h2 {
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+#results {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+#results pre {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .upload-section {
+        padding: 2rem;
+    }
+
+    button {
+        width: 100%;
+    }
+} 
